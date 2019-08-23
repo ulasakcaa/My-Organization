@@ -1,0 +1,12 @@
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\EntityFramework.dll
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\EntityFramework.xml
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Users\Sem\source\repos\MyOrgViewer\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

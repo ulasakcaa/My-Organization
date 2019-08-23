@@ -1,0 +1,158 @@
+﻿@model DataAccessLayer.Organization
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+
+<div>
+    <h4>Organization</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Image
+        </dt>
+        <dd>
+            @{string imageUrl = "/Images/" + Model.Images.Id + "_" + Model.Images.imageUrl;}
+            <img width="200" height="100" src="@imageUrl" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @using (Html.BeginForm("AddMember", "Organization", FormMethod.Post))
+    {
+        <input type="hidden" id="orgId" value="@Model.Id" name="orgId" />
+        <div class="form-group">
+            @Html.Label("USer", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{ var UserList = (List<DataAccessLayer.User>)ViewData["AllUsers"]; }
+                <select class="form-control" id="selectedUser" name="selectedUser">
+                    @foreach (var item in UserList)
+                    {
+                        <option id="@item.Id" value="@item.Id">@item.Id  --  @item.UserName</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Participant" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+</p>
+<div class="col-md-12" style="margin-bottom:50px">
+    Katılımcılar
+    <table>
+        <tr>
+            <th></th>
+            <th>User</th>
+        </tr>
+        @foreach (var orguser in Model.OrgUser)
+        {
+            <tr>
+                <td style="width: 22%;"> 
+                    <a href="/Organization/removeUser/@orguser.Id?orgId=@Model.Id">delete</a>
+                </td>
+                <td>
+                    @orguser.User.UserName
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+
+
+
+<div class="col-md-12">
+
+    @foreach (var orguser in Model.OrgImage)
+    {
+        string imagePath = "/Images" + "/" + orguser.Images.Id + "_" + orguser.Images.imageUrl;
+
+        <div id="img_@orguser.Images.Id" class="col-md-4">
+            <input type="button" id="btnDelete" name="btnDelete" value="Delete" onclick="deleteImage(@orguser.Images.Id)" />
+            <img style="width:300px;height:200px" src='@imagePath' />
+        </div>
+    }
+
+</div>
+
+<p>
+    @using (Html.BeginForm("AddImage", "Organization", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="hidden" id="orgId" value="@Model.Id" name="orgId" />
+        <div class="form-group">
+            @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="myFile" id="myFile" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Image" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+</p>
+
+<script>
+    function deleteImage(erdal) {
+        
+
+        $.post("http://localhost:49263/Api/Values/" + erdal, { id: erdal }, function (message) {
+            $('#img_' + erdal).remove();
+            alert(message);
+        });
+    }
+
+
+</script>

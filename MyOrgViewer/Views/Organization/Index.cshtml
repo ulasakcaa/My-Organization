@@ -1,0 +1,17 @@
+﻿@model MyOrgViewer.Models.OrgTitle
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.Baslik</h2>
+<h3>@Model.AltBaslik</h3>
+
+@Html.ActionLink("Add New", "Add")
+
+@*<h2>@ViewBag.baslik</h2>
+    <h3>@ViewBag.altbaslik</h3>*@
+
+<div id="orgList">
+    @Html.Action("ListOrgs")
+</div>
+

@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyOrganizationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imageUrl" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" MaxLength="600" />
+          <Property Name="OrganizationDate" Type="datetime" />
+          <Property Name="MainImageId" Type="int" />
+          <Property Name="Organizer" Type="int" />
+        </EntityType>
+        <EntityType Name="OrgImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrgId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrgUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrgId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserType" Type="int" />
+        </EntityType>
+        <Association Name="FK_Organization_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="MainImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="Organizer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgImage_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="1" />
+          <End Role="OrgImage" Type="Self.OrgImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgImage">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgImage_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrgImage" Type="Self.OrgImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgImage">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUser_OrgUser">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrgUser" Type="Self.OrgUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUser">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="OrgUser" Type="Self.OrgUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyOrganizationModelStoreContainer">
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrgImage" EntityType="Self.OrgImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrgUser" EntityType="Self.OrgUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Organization_Images" Association="Self.FK_Organization_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_User" Association="Self.FK_Organization_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgImage_Images" Association="Self.FK_OrgImage_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="OrgImage" EntitySet="OrgImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgImage_Organization" Association="Self.FK_OrgImage_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrgImage" EntitySet="OrgImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUser_OrgUser" Association="Self.FK_OrgUser_OrgUser">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrgUser" EntitySet="OrgUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUser_User" Association="Self.FK_OrgUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="OrgUser" EntitySet="OrgUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyOrganizationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationDate" Type="DateTime" Precision="3" />
+          <Property Name="MainImageId" Type="Int32" />
+          <Property Name="Organizer" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Organization_User" FromRole="Organization" ToRole="User" />
+          <NavigationProperty Name="OrgUser" Relationship="Self.FK_OrgUser_OrgUser" FromRole="Organization" ToRole="OrgUser" />
+          <NavigationProperty Name="Images" Relationship="MyOrganizationModel.FK_Organization_Images" FromRole="Organization" ToRole="Images" />
+          <NavigationProperty Name="OrgImage" Relationship="MyOrganizationModel.FK_OrgImage_Organization" FromRole="Organization" ToRole="OrgImage" />
+        </EntityType>
+        <EntityType Name="OrgUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrgId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_OrgUser_OrgUser" FromRole="OrgUser" ToRole="Organization" />
+          <NavigationProperty Name="User" Relationship="Self.FK_OrgUser_User" FromRole="OrgUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="Int32" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Organization_User" FromRole="User" ToRole="Organization" />
+          <NavigationProperty Name="OrgUser" Relationship="Self.FK_OrgUser_User" FromRole="User" ToRole="OrgUser" />
+        </EntityType>
+        <Association Name="FK_Organization_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="Organizer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUser_OrgUser">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrgUser" Type="Self.OrgUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUser">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="OrgUser" Type="Self.OrgUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyOrganizationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Organization" EntityType="Self.Organization" />
+          <EntitySet Name="OrgUser" EntityType="Self.OrgUser" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Organization_User" Association="Self.FK_Organization_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUser_OrgUser" Association="Self.FK_OrgUser_OrgUser">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrgUser" EntitySet="OrgUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUser_User" Association="Self.FK_OrgUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="OrgUser" EntitySet="OrgUser" />
+          </AssociationSet>
+          <EntitySet Name="Images" EntityType="MyOrganizationModel.Images" />
+          <AssociationSet Name="FK_Organization_Images" Association="MyOrganizationModel.FK_Organization_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <EntitySet Name="OrgImage" EntityType="MyOrganizationModel.OrgImage" />
+          <AssociationSet Name="FK_OrgImage_Images" Association="MyOrganizationModel.FK_OrgImage_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="OrgImage" EntitySet="OrgImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgImage_Organization" Association="MyOrganizationModel.FK_OrgImage_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrgImage" EntitySet="OrgImage" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imageUrl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Organization" Relationship="MyOrganizationModel.FK_Organization_Images" FromRole="Images" ToRole="Organization" />
+          <NavigationProperty Name="OrgImage" Relationship="MyOrganizationModel.FK_OrgImage_Images" FromRole="Images" ToRole="OrgImage" />
+        </EntityType>
+        <Association Name="FK_Organization_Images">
+          <End Type="MyOrganizationModel.Images" Role="Images" Multiplicity="0..1" />
+          <End Type="MyOrganizationModel.Organization" Role="Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="MainImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrgImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrgId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Images" Relationship="MyOrganizationModel.FK_OrgImage_Images" FromRole="OrgImage" ToRole="Images" />
+          <NavigationProperty Name="Organization" Relationship="MyOrganizationModel.FK_OrgImage_Organization" FromRole="OrgImage" ToRole="Organization" />
+        </EntityType>
+        <Association Name="FK_OrgImage_Images">
+          <End Type="MyOrganizationModel.Images" Role="Images" Multiplicity="1" />
+          <End Type="MyOrganizationModel.OrgImage" Role="OrgImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgImage">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgImage_Organization">
+          <End Type="MyOrganizationModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="MyOrganizationModel.OrgImage" Role="OrgImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgImage">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyOrganizationModelStoreContainer" CdmEntityContainer="MyOrganizationEntities">
+          <EntitySetMapping Name="Organization">
+            <EntityTypeMapping TypeName="MyOrganizationModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OrganizationDate" ColumnName="OrganizationDate" />
+                <ScalarProperty Name="MainImageId" ColumnName="MainImageId" />
+                <ScalarProperty Name="Organizer" ColumnName="Organizer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrgUser">
+            <EntityTypeMapping TypeName="MyOrganizationModel.OrgUser">
+              <MappingFragment StoreEntitySet="OrgUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="MyOrganizationModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="MyOrganizationModel.Images">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="imageUrl" ColumnName="imageUrl" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrgImage">
+            <EntityTypeMapping TypeName="MyOrganizationModel.OrgImage">
+              <MappingFragment StoreEntitySet="OrgImage">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,6 @@
+C:\Users\Sem\source\repos\MyOrgViewer\BusinessLayer\bin\Debug\BusinessLayer.dll
+C:\Users\Sem\source\repos\MyOrgViewer\BusinessLayer\bin\Debug\BusinessLayer.pdb
+C:\Users\Sem\source\repos\MyOrgViewer\BusinessLayer\obj\Debug\BusinessLayer.csprojAssemblyReference.cache
+C:\Users\Sem\source\repos\MyOrgViewer\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Sem\source\repos\MyOrgViewer\BusinessLayer\obj\Debug\BusinessLayer.dll
+C:\Users\Sem\source\repos\MyOrgViewer\BusinessLayer\obj\Debug\BusinessLayer.pdb

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1cf2796d1c7c4cb684349e75cfa39114" Name="Diagram1">
+        <EntityTypeShape EntityType="MyOrganizationModel.Organization" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyOrganizationModel.OrgUser" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyOrganizationModel.User" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="MyOrganizationModel.FK_Organization_User" ManuallyRouted="false" />
+        <AssociationConnector Association="MyOrganizationModel.FK_OrgUser_OrgUser" ManuallyRouted="false" />
+        <AssociationConnector Association="MyOrganizationModel.FK_OrgUser_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MyOrganizationModel.Images" Width="1.5" PointX="5.375" PointY="6.875" />
+        <AssociationConnector Association="MyOrganizationModel.FK_Organization_Images" />
+        <EntityTypeShape EntityType="MyOrganizationModel.OrgImage" Width="1.5" PointX="7.625" PointY="5" />
+        <AssociationConnector Association="MyOrganizationModel.FK_OrgImage_Images" />
+        <AssociationConnector Association="MyOrganizationModel.FK_OrgImage_Organization" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
